@@ -1,0 +1,76 @@
+﻿@model IEnumerable<TaskTracker.Models.TaskItem>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<p>
+    <a asp-action="Create">Add new Task</a>
+</p>
+<p>
+    <a>Active</a>
+    <a style="margin-left: 33%">Completed</a>
+    <a style="margin-left: 33%">Canceled</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Tasks
+            </th>
+            <th>
+                Action
+            </th>
+            <th>
+                Executor
+            </th>
+            <th>
+                Date
+            </th>
+            <th>
+                Status
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @item.Content
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Complete</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Cancel</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+            <td>
+                @item.Executor
+            </td>
+            <td>
+                @item.TaskDate
+            </td>
+            <td>
+                @if (item.Progress == "completed")
+                {
+                    <div style="background-color: #008000">
+                        @item.Progress
+                    </div>
+                }
+                @if (item.Progress == "canceled")
+                {
+                    <div style="background-color: #FF0000">
+                        @item.Progress
+                    </div>
+                }
+                @if (item.Progress == "not_completed")
+                {
+                    <div style="background-color: #FFA500">
+                        @item.Progress
+                    </div>
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
